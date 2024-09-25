@@ -4,7 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,7 +18,8 @@ public class WheelSubsystem extends SubsystemBase {
     private static volatile WheelSubsystem instance;
     private static Object mutex = new Object();
 
-    CANSparkMax wheelMotor = new CANSparkMax(2, MotorType.kBrushless);
+    private CANSparkMax wheelMotor = new CANSparkMax(2, MotorType.kBrushless);
+    private CANcoder wheelMotorEncoder = (CANcoder) wheelMotor.getEncoder();
 
     public static WheelSubsystem getInstance() {
         WheelSubsystem result = instance;
@@ -46,5 +50,9 @@ public class WheelSubsystem extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
     }
-}
 
+    public double getWheelMotorPosition(){
+        return Math.toDegrees(wheelMotorEncoder.getAbsolutePosition().
+                              getValue());
+    }
+}
