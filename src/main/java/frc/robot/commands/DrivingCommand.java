@@ -4,15 +4,17 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.WheelSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that does nothing. */
 public class DrivingCommand extends Command {
     
+    private double speed;
+
     public DrivingCommand(double speed) {
         setName("DrivingCommand");
-        
+        this.speed = speed;
         addRequirements(WheelSubsystem.getInstance());
     }
 
@@ -20,7 +22,7 @@ public class DrivingCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        this.finished = false;
+        drivingMotor.setSpeedDrive(speed);
     }
 
 

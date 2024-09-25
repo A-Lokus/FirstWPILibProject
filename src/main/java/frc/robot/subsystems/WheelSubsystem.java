@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -18,8 +19,9 @@ public class WheelSubsystem extends SubsystemBase {
     private static volatile WheelSubsystem instance;
     private static Object mutex = new Object();
 
-    private CANSparkMax wheelMotor = new CANSparkMax(2, MotorType.kBrushless);
-    private CANcoder wheelMotorEncoder = (CANcoder) wheelMotor.getEncoder();
+    private CANSparkMax drivingMotor = new CANSparkMax(2, MotorType.kBrushless);
+    private CANSparkMax turningMotor = new CANSparkMax(3, MotorType.kBrushless);
+    private CANcoder wheelMotorEncoder = (CANcoder) drivingMotorMotor.getEncoder();
 
     public static WheelSubsystem getInstance() {
         WheelSubsystem result = instance;
@@ -35,9 +37,13 @@ public class WheelSubsystem extends SubsystemBase {
         return instance;
     }
 
-    public void setSpeed(double speed)
+    public void setSpeedDrive(double speed)
     {
-        this.wheelMotor.set(speed);
+        this.drivingMotor.set(speed);
+    }
+
+    public void setSpeedTurn(double speed){
+        this.turningMotor.set(speed);
     }
 
     /** Creates a new ExampleSubsystem. */
@@ -52,7 +58,7 @@ public class WheelSubsystem extends SubsystemBase {
     }
 
     public double getWheelMotorPosition(){
-        return Math.toDegrees(wheelMotorEncoder.getAbsolutePosition().
-                              getValue());
+        return Units.rotationsToDegrees(wheelMotorEncoder.
+                                        getAbsolutePosition().getValue());
     }
 }
