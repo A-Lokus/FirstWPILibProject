@@ -21,7 +21,7 @@ public class WheelSubsystem extends SubsystemBase {
 
     private CANSparkMax drivingMotor = new CANSparkMax(2, MotorType.kBrushless);
     private CANSparkMax turningMotor = new CANSparkMax(3, MotorType.kBrushless);
-    private CANcoder wheelMotorEncoder = (CANcoder) drivingMotorMotor.getEncoder();
+    private CANcoder turningEncoder = new CANcoder(4);
 
     public static WheelSubsystem getInstance() {
         WheelSubsystem result = instance;
@@ -58,7 +58,7 @@ public class WheelSubsystem extends SubsystemBase {
     }
 
     public double getWheelMotorPosition(){
-        return Units.rotationsToDegrees(wheelMotorEncoder.
+        return Units.rotationsToDegrees(turningEncoder.
                                         getAbsolutePosition().getValue());
     }
 }

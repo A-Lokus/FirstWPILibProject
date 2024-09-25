@@ -22,9 +22,8 @@ public class DrivingCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        drivingMotor.setSpeedDrive(speed);
+        WheelSubsystem.getInstance().setSpeedDrive(speed);
     }
-
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -36,7 +35,7 @@ public class DrivingCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
+        WheelSubsystem.getInstance().setSpeedDrive(0);
     }
 
 
