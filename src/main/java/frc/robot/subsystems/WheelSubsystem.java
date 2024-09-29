@@ -21,7 +21,7 @@ public class WheelSubsystem extends SubsystemBase {
 
     private CANSparkMax drivingMotor = new CANSparkMax(2, MotorType.kBrushless);
     private CANSparkMax turningMotor = new CANSparkMax(3, MotorType.kBrushless);
-    private CANcoder turningEncoder = new CANcoder(4);
+    private CANcoder turningEncoder = new CANcoder(10,"swerve");
 
     public static WheelSubsystem getInstance() {
         WheelSubsystem result = instance;
