@@ -5,11 +5,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,9 +22,10 @@ public class WheelSubsystem extends SubsystemBase {
     private static volatile WheelSubsystem instance;
     private static Object mutex = new Object();
 
-    private CANSparkMax drivingMotor = new CANSparkMax(2, MotorType.kBrushless);
-    private CANSparkMax turningMotor = new CANSparkMax(3, MotorType.kBrushless);
+    private CANSparkMax drivingMotor = new CANSparkMax(3, MotorType.kBrushless);
+    private CANSparkMax turningMotor = new CANSparkMax(2, MotorType.kBrushless);
     private CANcoder turningEncoder = new CANcoder(10,"swerve");
+
 
     public static WheelSubsystem getInstance() {
         WheelSubsystem result = instance;
@@ -37,6 +41,19 @@ public class WheelSubsystem extends SubsystemBase {
         return instance;
     }
 
+
+
+    /** Creates a new ExampleSubsystem. */
+    private WheelSubsystem() {
+        super("WheelSubsystem");
+
+        MagnetSensorConfigs config = new MagnetSensorConfigs();
+        config.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
+        this.turningEncoder.getConfigurator().apply(config);
+    }
+
+
+
     public void setSpeedDrive(double speed)
     {
         this.drivingMotor.set(speed);
@@ -46,10 +63,6 @@ public class WheelSubsystem extends SubsystemBase {
         this.turningMotor.set(speed);
     }
 
-    /** Creates a new ExampleSubsystem. */
-    private WheelSubsystem() {
-        super("WheelSubsystem");
-    }
 
 
     @Override

@@ -5,8 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DrivingCommand;
+import frc.robot.commands.TurnToPositionCommand;
 import frc.robot.subsystems.WheelSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final WheelSubsystem m_WheelSubsystem = new WheelSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -51,6 +50,10 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.a().onTrue(new DrivingCommand(0.1));
     m_driverController.b().onTrue(Commands.run(()->CommandScheduler.getInstance().cancelAll()));
+    m_driverController.pov(90).whileTrue(new TurnToPositionCommand(90));
+    m_driverController.pov(180).whileTrue(new TurnToPositionCommand(180));
+    m_driverController.pov(270).whileTrue(new TurnToPositionCommand(270))
+    m_driverController.pov(360).whileTrue(new TurnToPositionCommand(360));
   }
 
   /**
